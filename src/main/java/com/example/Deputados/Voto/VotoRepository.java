@@ -1,8 +1,7 @@
-package com.example.Deputados.repository;
+package com.example.Deputados.Voto;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.example.Deputados.model.Voto;
 
 @Repository
 public interface VotoRepository extends JpaRepository<Voto, Long> {

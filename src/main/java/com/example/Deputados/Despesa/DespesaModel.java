@@ -1,7 +1,9 @@
-package com.example.Deputados.model;
+package com.example.Deputados.Despesa;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import com.example.Deputados.Deputado.DeputadoModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Date;
 
@@ -11,7 +13,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Despesa {
+public class DespesaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +22,7 @@ public class Despesa {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idDeputado", nullable = false)
     @JsonBackReference
-    private Deputado deputado;
+    private DeputadoModel deputado;
 
     @Temporal(TemporalType.DATE)
     private Date dataDocumento;

@@ -1,8 +1,10 @@
-package com.example.Deputados.model;
+package com.example.Deputados.Deputado;
 
 import jakarta.persistence.*;
 import lombok.*;
 
+import com.example.Deputados.Despesa.DespesaModel;
+import com.example.Deputados.Proposicao.ProposicaoModel;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Deputado {
+public class DeputadoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +25,9 @@ public class Deputado {
 
     @OneToMany(mappedBy = "deputado", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Despesa> despesas;
+    private List<DespesaModel> despesas;
 
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Proposicao> proposicoes;
+    private List<ProposicaoModel> proposicoes;
 }

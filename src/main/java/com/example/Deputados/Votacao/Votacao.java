@@ -1,7 +1,9 @@
-package com.example.Deputados.model;
+package com.example.Deputados.Votacao;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import com.example.Deputados.Voto.Voto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Date;
 import java.util.List;

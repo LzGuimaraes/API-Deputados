@@ -1,7 +1,9 @@
-package com.example.Deputados.model;
+package com.example.Deputados.Proposicao;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import com.example.Deputados.Deputado.DeputadoModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
@@ -10,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Proposicao {
+public class ProposicaoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +21,7 @@ public class Proposicao {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idAutor", nullable = false)
     @JsonBackReference
-    private Deputado autor;
+    private DeputadoModel autor;
 
     private String siglaTipo;
 

@@ -1,4 +1,4 @@
-package com.example.Deputados.controller;
+package com.example.Deputados.Despesa;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,10 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.Deputados.model.Deputado;
-import com.example.Deputados.model.Despesa;
-import com.example.Deputados.service.DeputadoService;
-import com.example.Deputados.service.DespesaService;
+import com.example.Deputados.Deputado.DeputadoModel;
+import com.example.Deputados.Deputado.DeputadoService;
 
 @RestController
 @RequestMapping("/api/despesas")
@@ -24,24 +22,24 @@ public class DespesaController {
     private DeputadoService deputadoService;
 
     @PostMapping
-    public ResponseEntity<Despesa> create(@RequestBody Despesa despesa) {
-        Optional<Deputado> deputadoOpt = deputadoService.findById(despesa.getDeputado().getId());
+    public ResponseEntity<DespesaModel> create(@RequestBody DespesaModel despesa) {
+        Optional<DeputadoModel> deputadoOpt = deputadoService.findById(despesa.getDeputado().getId());
         if (!deputadoOpt.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
         despesa.setDeputado(deputadoOpt.get());
-        Despesa novaDespesa = despesaService.save(despesa);
+        DespesaModel novaDespesa = despesaService.save(despesa);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaDespesa);
     }
 
     @GetMapping
-    public List<Despesa> getAll() {
+    public List<DespesaModel> getAll() {
         return despesaService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Despesa> getById(@PathVariable Long id) {
-        Optional<Despesa> despesa = despesaService.findById(id);
+    public ResponseEntity<DespesaModel> getById(@PathVariable Long id) {
+        Optional<DespesaModel> despesa = despesaService.findById(id);
         return despesa.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 

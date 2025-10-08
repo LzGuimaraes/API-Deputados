@@ -1,4 +1,4 @@
-package com.example.Deputados.controller;
+package com.example.Deputados.Voto;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,12 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.Deputados.model.Deputado;
-import com.example.Deputados.model.Votacao;
-import com.example.Deputados.model.Voto;
-import com.example.Deputados.service.DeputadoService;
-import com.example.Deputados.service.VotacaoService;
-import com.example.Deputados.service.VotoService;
+import com.example.Deputados.Deputado.DeputadoModel;
+import com.example.Deputados.Deputado.DeputadoService;
+import com.example.Deputados.Votacao.Votacao;
+import com.example.Deputados.Votacao.VotacaoService;
 
 @RestController
 @RequestMapping("/api/votos")
@@ -30,7 +28,7 @@ public class VotoController {
 
     @PostMapping
     public ResponseEntity<Voto> create(@RequestBody Voto voto) {
-        Optional<Deputado> deputadoOpt = deputadoService.findById(voto.getDeputado().getId());
+        Optional<DeputadoModel> deputadoOpt = deputadoService.findById(voto.getDeputado().getId());
         if (!deputadoOpt.isPresent()) {
             return ResponseEntity.badRequest().body(null);
         }

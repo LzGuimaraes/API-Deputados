@@ -1,13 +1,10 @@
-package com.example.Deputados.service;
+package com.example.Deputados.Voto;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.Deputados.model.Voto;
-import com.example.Deputados.repository.VotoRepository;
 
 @Service
 public class VotoService {

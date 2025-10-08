@@ -1,4 +1,4 @@
-package com.example.Deputados.controller;
+package com.example.Deputados.Deputado;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,10 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.example.Deputados.model.Deputado;
-import com.example.Deputados.service.DeputadoService;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,18 +21,18 @@ public class DeputadoController {
     private DeputadoService deputadoService;
 
     @PostMapping
-    public Deputado create (@RequestBody Deputado deputado) {
+    public DeputadoModel create (@RequestBody DeputadoModel deputado) {
         return deputadoService.save(deputado);
     }
 
     @GetMapping()
-    public List <Deputado> getAll() {
+    public List <DeputadoModel> getAll() {
         return deputadoService.findAll();
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Deputado> getById(@PathVariable Long id) {
-        Optional<Deputado> deputado = deputadoService.findById(id);
+    public ResponseEntity<DeputadoModel> getById(@PathVariable Long id) {
+        Optional<DeputadoModel> deputado = deputadoService.findById(id);
         return deputado.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
     @DeleteMapping("/{id}")

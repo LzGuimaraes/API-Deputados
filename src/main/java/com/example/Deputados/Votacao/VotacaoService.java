@@ -1,8 +1,7 @@
-package com.example.Deputados.service;
+package com.example.Deputados.Votacao;
 
-import com.example.Deputados.model.Votacao;
-import com.example.Deputados.repository.ProposicaoRepository;
-import com.example.Deputados.repository.VotacaoRepository;
+import com.example.Deputados.Proposicao.ProposicaoRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

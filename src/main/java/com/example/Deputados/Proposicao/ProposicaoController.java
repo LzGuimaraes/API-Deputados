@@ -1,4 +1,4 @@
-package com.example.Deputados.controller;
+package com.example.Deputados.Proposicao;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,10 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Deputados.model.Deputado;
-import com.example.Deputados.model.Proposicao;
-import com.example.Deputados.service.DeputadoService;
-import com.example.Deputados.service.ProposicaoService; 
+import com.example.Deputados.Deputado.DeputadoModel;
+import com.example.Deputados.Deputado.DeputadoService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +30,8 @@ public class ProposicaoController {
     private DeputadoService deputadoService;
 
     @PostMapping
-    public ResponseEntity <Proposicao> create(@RequestBody Proposicao proposicao) {
-        Optional<Deputado> deputadoOpt = deputadoService.findById(proposicao.getAutor().getId());
+    public ResponseEntity <ProposicaoModel> create(@RequestBody ProposicaoModel proposicao) {
+        Optional<DeputadoModel> deputadoOpt = deputadoService.findById(proposicao.getAutor().getId());
         
         if (!deputadoOpt.isPresent()) {
             return ResponseEntity.badRequest().build(); 
@@ -41,19 +39,19 @@ public class ProposicaoController {
 
         proposicao.setAutor(deputadoOpt.get());
         
-        Proposicao novaProposicao = proposicaoService.save(proposicao);
+        ProposicaoModel novaProposicao = proposicaoService.save(proposicao);
         
         return ResponseEntity.status(HttpStatus.CREATED).body(novaProposicao);
     }
 
     @GetMapping
-    public List<Proposicao> getAll() {
+    public List<ProposicaoModel> getAll() {
         return proposicaoService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Proposicao> getById(@PathVariable Integer id) {
-        Optional<Proposicao> proposicao = proposicaoService.findById(id);
+    public ResponseEntity<ProposicaoModel> getById(@PathVariable Integer id) {
+        Optional<ProposicaoModel> proposicao = proposicaoService.findById(id);
         return proposicao.map(ResponseEntity::ok).orElseGet(()-> ResponseEntity.notFound().build());
     }
     
