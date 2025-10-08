@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import com.example.Deputados.Deputado.DeputadoModel;
-import com.example.Deputados.Votacao.Votacao;
+import com.example.Deputados.Votacao.VotacaoModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Voto {
+public class VotoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class Voto {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idVotacao", nullable = false)
     @JsonBackReference
-    private Votacao votacao;
+    private VotacaoModel votacao;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idDeputado", nullable = false)

@@ -1,7 +1,5 @@
 package com.example.Deputados.Votacao;
 
-import com.example.Deputados.Proposicao.ProposicaoRepository;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +11,16 @@ import java.util.Optional;
 public class VotacaoService {
 
     private final VotacaoRepository votacaoRepository;
-    private final ProposicaoRepository proposicaoRepository;
 
-    public List<Votacao> findAll() {
+    public List<VotacaoModel> findAll() {
         return votacaoRepository.findAll();
     }
 
-    public Optional<Votacao> findById(Integer id) {
+    public Optional<VotacaoModel> findById(Integer id) {
         return votacaoRepository.findById(id);
     }
 
-    public Votacao save(Votacao votacao) {
+    public VotacaoModel save(VotacaoModel votacao) {
         return votacaoRepository.save(votacao);
     }
 

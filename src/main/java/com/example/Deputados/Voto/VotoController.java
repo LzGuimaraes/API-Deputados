@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.Deputados.Deputado.DeputadoModel;
 import com.example.Deputados.Deputado.DeputadoService;
-import com.example.Deputados.Votacao.Votacao;
+import com.example.Deputados.Votacao.VotacaoModel;
 import com.example.Deputados.Votacao.VotacaoService;
 
 @RestController
@@ -27,13 +27,13 @@ public class VotoController {
     private VotacaoService votacaoService;
 
     @PostMapping
-    public ResponseEntity<Voto> create(@RequestBody Voto voto) {
+    public ResponseEntity<VotoModel> create(@RequestBody VotoModel voto) {
         Optional<DeputadoModel> deputadoOpt = deputadoService.findById(voto.getDeputado().getId());
         if (!deputadoOpt.isPresent()) {
             return ResponseEntity.badRequest().body(null);
         }
 
-        Optional<Votacao> votacaoOpt = votacaoService.findById(voto.getVotacao().getId());
+        Optional<VotacaoModel> votacaoOpt = votacaoService.findById(voto.getVotacao().getId());
         if (!votacaoOpt.isPresent()) {
             return ResponseEntity.badRequest().body(null);
         }
@@ -41,18 +41,18 @@ public class VotoController {
         voto.setDeputado(deputadoOpt.get());
         voto.setVotacao(votacaoOpt.get());
 
-        Voto novoVoto = votoService.save(voto);
+        VotoModel novoVoto = votoService.save(voto);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoVoto);
     }
 
     @GetMapping
-    public List<Voto> getAll() {
+    public List<VotoModel> getAll() {
         return votoService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Voto> getById(@PathVariable Long id) {
-        Optional<Voto> voto = votoService.findById(id);
+    public ResponseEntity<VotoModel> getById(@PathVariable Long id) {
+        Optional<VotoModel> voto = votoService.findById(id);
         return voto.map(ResponseEntity::ok)
                    .orElseGet(() -> ResponseEntity.notFound().build());
     }

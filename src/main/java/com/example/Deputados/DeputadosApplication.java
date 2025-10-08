@@ -8,6 +8,7 @@ public class DeputadosApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DeputadosApplication.class, args);
+        System.out.println("Aplicação rodando com Sucesso");
     }
 }
 

@@ -3,18 +3,17 @@ package com.example.Deputados.Votacao;
 import jakarta.persistence.*;
 import lombok.*;
 
-import com.example.Deputados.Voto.Voto;
+import com.example.Deputados.Voto.VotoModel;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "votacao")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Votacao {
+public class VotacaoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +26,5 @@ public class Votacao {
 
     @OneToMany(mappedBy = "votacao", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Voto> votos;
+    private List<VotoModel> votos;
 }

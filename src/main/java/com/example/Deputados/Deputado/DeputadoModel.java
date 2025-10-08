@@ -5,7 +5,8 @@ import lombok.*;
 
 import com.example.Deputados.Despesa.DespesaModel;
 import com.example.Deputados.Proposicao.ProposicaoModel;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 @Entity
@@ -24,10 +25,10 @@ public class DeputadoModel {
     private String nomeCivil;
 
     @OneToMany(mappedBy = "deputado", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnore
     private List<DespesaModel> despesas;
 
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnore
     private List<ProposicaoModel> proposicoes;
 }

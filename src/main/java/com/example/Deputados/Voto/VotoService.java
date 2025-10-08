@@ -12,15 +12,15 @@ public class VotoService {
     @Autowired
     private VotoRepository votoRepository;
 
-    public List<Voto> findAll() {
+    public List<VotoModel> findAll() {
         return votoRepository.findAll();
     }
 
-    public Optional<Voto> findById(Long id) {
+    public Optional<VotoModel> findById(Long id) {
         return votoRepository.findById(id);
     }
 
-    public Voto save(Voto voto) {
+    public VotoModel save(VotoModel voto) {
         return votoRepository.save(voto);
     }
 

@@ -16,19 +16,19 @@ public class VotacaoController {
     private VotacaoService votacaoService;
 
     @PostMapping
-    public ResponseEntity<Votacao> create(@RequestBody Votacao votacao) {
-        Votacao novaVotacao = votacaoService.save(votacao);
+    public ResponseEntity<VotacaoModel> create(@RequestBody VotacaoModel votacao) {
+        VotacaoModel novaVotacao = votacaoService.save(votacao);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaVotacao);
     }
 
     @GetMapping
-    public List<Votacao> getAll() {
+    public List<VotacaoModel> getAll() {
         return votacaoService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Votacao> getById(@PathVariable Integer id) {
-        Optional<Votacao> votacao = votacaoService.findById(id);
+    public ResponseEntity<VotacaoModel> getById(@PathVariable Integer id) {
+        Optional<VotacaoModel> votacao = votacaoService.findById(id);
         return votacao.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
