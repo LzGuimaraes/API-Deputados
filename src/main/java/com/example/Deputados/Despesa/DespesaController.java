@@ -10,46 +10,38 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.Deputados.Deputado.DeputadoModel;
 import com.example.Deputados.Deputado.DeputadoService;
+import com.example.Deputados.Despesa.dto.DespesaRequestDTO;
+import com.example.Deputados.Despesa.dto.DespesaResponseDTO;
 
 @RestController
-@RequestMapping("/api/despesas")
+@RequestMapping("/despesas")
 public class DespesaController {
 
-    @Autowired
     private DespesaService despesaService;
 
-    @Autowired
-    private DeputadoService deputadoService;
-
-    @PostMapping
-    public ResponseEntity<DespesaModel> create(@RequestBody DespesaModel despesa) {
-        Optional<DeputadoModel> deputadoOpt = deputadoService.findById(despesa.getDeputado().getId());
-        if (!deputadoOpt.isPresent()) {
-            return ResponseEntity.badRequest().build();
-        }
-        despesa.setDeputado(deputadoOpt.get());
-        DespesaModel novaDespesa = despesaService.save(despesa);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novaDespesa);
+    public DespesaController(DespesaService despesaService) {
+        this.despesaService = despesaService;
     }
 
-    @GetMapping
-    public List<DespesaModel> getAll() {
-        return despesaService.findAll();
+    @GetMapping("/all")
+    public List<DespesaResponseDTO> findAllDespesas() {
+        return despesaService.findAllDespesas();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<DespesaModel> getById(@PathVariable Long id) {
-        Optional<DespesaModel> despesa = despesaService.findById(id);
-        return despesa.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/all/{id}")
+    public DespesaResponseDTO findDespesaById(@PathVariable Long id) {
+        return despesaService.findDespesaById(id);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (despesaService.findById(id).isPresent()) {
-            despesaService.deleteById(id);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @PostMapping("/create")
+    public ResponseEntity<DespesaResponseDTO> create(@RequestBody DespesaRequestDTO dto) {
+        DespesaResponseDTO response = despesaService.createDespesa(dto);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public void deleteDespesa(Long id) {
+        despesaService.deleteDespesa(id);
     }
 }
+

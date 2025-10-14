@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import com.example.Deputados.Deputado.DeputadoModel;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 @Entity
@@ -21,7 +22,7 @@ public class DespesaModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idDeputado", nullable = false)
-    @JsonBackReference
+    @JsonIgnore
     private DeputadoModel deputado;
 
     @Temporal(TemporalType.DATE)

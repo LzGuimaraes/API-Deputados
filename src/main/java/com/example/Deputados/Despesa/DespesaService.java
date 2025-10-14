@@ -3,28 +3,42 @@ package com.example.Deputados.Despesa;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.Deputados.Despesa.dto.DespesaRequestDTO;
+import com.example.Deputados.Despesa.dto.DespesaResponseDTO;
 
 @Service
 public class DespesaService {
-
-    @Autowired
+    
     private DespesaRepository despesaRepository;
+    private DespesaMapper despesaMapper;
 
-    public List<DespesaModel> findAll() {
-        return despesaRepository.findAll();
+    public DespesaService (DespesaRepository despesaRepository, DespesaMapper despesaMapper) {
+        this.despesaRepository = despesaRepository;
+        this.despesaMapper = despesaMapper; 
     }
 
-    public Optional<DespesaModel> findById(Long id) {
-        return despesaRepository.findById(id);
+    public List<DespesaResponseDTO> findAllDespesas() {
+        return despesaRepository.findAll()
+                .stream()
+                .map(despesaMapper::toResponse)
+                .toList();
     }
 
-    public DespesaModel save(DespesaModel despesa) {
-        return despesaRepository.save(despesa);
+    public DespesaResponseDTO findDespesaById(Long id) {
+        return despesaRepository.findById(id)
+                .map(despesaMapper::toResponse)
+                .orElseThrow(()-> new RuntimeException("Despesa não encontrada"));
     }
 
-    public void deleteById(Long id) {
+    public DespesaResponseDTO createDespesa(DespesaRequestDTO dto) {
+        DespesaModel despesa = despesaMapper.toModel(dto);
+        despesa = despesaRepository.save(despesa);
+        return despesaMapper.toResponse(despesa);
+    }
+
+    public void deleteDespesa(Long id) {
         despesaRepository.deleteById(id);
     }
 }

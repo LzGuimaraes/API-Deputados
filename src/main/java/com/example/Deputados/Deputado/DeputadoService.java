@@ -30,7 +30,7 @@ public class DeputadoService {
     public DeputadoResponseDTO findDeputadoById(Long id) {
         return deputadoRepository.findById(id)
                     .map(deputadoMapper::toResponse)
-                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                    .orElseThrow(() -> new RuntimeException("Deputado não encontrado"));
     }
 
     public DeputadoResponseDTO createDeputado(DeputadoRequestDTO dto) {
