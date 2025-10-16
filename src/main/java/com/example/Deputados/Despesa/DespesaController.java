@@ -1,15 +1,9 @@
 package com.example.Deputados.Despesa;
 
 import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.Deputados.Deputado.DeputadoModel;
-import com.example.Deputados.Deputado.DeputadoService;
 import com.example.Deputados.Despesa.dto.DespesaRequestDTO;
 import com.example.Deputados.Despesa.dto.DespesaResponseDTO;
 

@@ -1,27 +1,46 @@
 package com.example.Deputados.Proposicao;
 
 import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.Deputados.Despesa.DespesaModel;
+import com.example.Deputados.Despesa.dto.DespesaRequestDTO;
+import com.example.Deputados.Despesa.dto.DespesaResponseDTO;
+import com.example.Deputados.Proposicao.dto.ProposicaoRequestDTO;
+import com.example.Deputados.Proposicao.dto.ProposicaoResponseDTO;
 
 @Service
 public class ProposicaoService {
     
-    @Autowired
     private ProposicaoRepository proposicaoRepository;
+    private ProposicaoMapper proposicaoMapper;
+    
+    public ProposicaoService (ProposicaoRepository proposicaoRepository, ProposicaoMapper proposicaoMapper) {
+        this.proposicaoRepository = proposicaoRepository;
+        this.proposicaoMapper = proposicaoMapper;
 
-    public List <ProposicaoModel> findAll(){
-        return proposicaoRepository.findAll();
+    } 
+
+   public List<ProposicaoResponseDTO> findAllProposicao() {
+        return proposicaoRepository.findAll()
+                .stream()
+                .map(proposicaoMapper::toResponse)
+                .toList();
     }
-    public Optional <ProposicaoModel> findById(Integer id) {
-        return proposicaoRepository.findById(id);
+
+    public ProposicaoResponseDTO findProposicaoById(Long id) {
+        return proposicaoRepository.findById(id)
+                .map(proposicaoMapper::toResponse)
+                .orElseThrow(()-> new RuntimeException("Proposição não encontrada"));
     }
-    public  ProposicaoModel save(ProposicaoModel proposicao) {
-        return proposicaoRepository.save(proposicao);
+
+   public ProposicaoResponseDTO createDespesa(ProposicaoRequestDTO dto) {
+        ProposicaoModel proposicao = proposicaoMapper.toModel(dto);
+        proposicao = proposicaoRepository.save(proposicao);
+        return proposicaoMapper.toResponse(proposicao);
     }
-    public void deleteById(Integer id) {
+
+    public void deleteProposicao(Long id) {
         proposicaoRepository.deleteById(id);
     }
 }
