@@ -3,9 +3,6 @@ package com.example.Deputados.Proposicao;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-import com.example.Deputados.Despesa.DespesaModel;
-import com.example.Deputados.Despesa.dto.DespesaRequestDTO;
-import com.example.Deputados.Despesa.dto.DespesaResponseDTO;
 import com.example.Deputados.Proposicao.dto.ProposicaoRequestDTO;
 import com.example.Deputados.Proposicao.dto.ProposicaoResponseDTO;
 
@@ -34,7 +31,7 @@ public class ProposicaoService {
                 .orElseThrow(()-> new RuntimeException("Proposição não encontrada"));
     }
 
-   public ProposicaoResponseDTO createDespesa(ProposicaoRequestDTO dto) {
+   public ProposicaoResponseDTO createProposicao(ProposicaoRequestDTO dto) {
         ProposicaoModel proposicao = proposicaoMapper.toModel(dto);
         proposicao = proposicaoRepository.save(proposicao);
         return proposicaoMapper.toResponse(proposicao);

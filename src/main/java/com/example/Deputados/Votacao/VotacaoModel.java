@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import com.example.Deputados.Voto.VotoModel;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class VotacaoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date data;
@@ -25,6 +25,6 @@ public class VotacaoModel {
     private String resumo;
 
     @OneToMany(mappedBy = "votacao", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnore
     private List<VotoModel> votos;
 }

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import com.example.Deputados.Deputado.DeputadoModel;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "proposicao")
@@ -20,7 +20,7 @@ public class ProposicaoModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idAutor", nullable = false)
-    @JsonBackReference
+    @JsonIgnore
     private DeputadoModel autor;
 
     private String siglaTipo;

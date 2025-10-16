@@ -5,7 +5,7 @@ import lombok.*;
 
 import com.example.Deputados.Deputado.DeputadoModel;
 import com.example.Deputados.Votacao.VotacaoModel;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "voto", uniqueConstraints = {
@@ -23,11 +23,12 @@ public class VotoModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idVotacao", nullable = false)
-    @JsonBackReference
+    @JsonIgnore
     private VotacaoModel votacao;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idDeputado", nullable = false)
+    @JsonIgnore
     private DeputadoModel deputado;
 
     @Column(length = 20)

@@ -39,7 +39,7 @@ public class ProposicaoController {
 
     @PostMapping("/create")
     public ResponseEntity<ProposicaoResponseDTO> create(@RequestBody ProposicaoRequestDTO dto) {
-        ProposicaoResponseDTO response = proposicaoService.createDespesa(dto);
+        ProposicaoResponseDTO response = proposicaoService.createProposicao(dto);
         return ResponseEntity.ok(response);
     }
   
