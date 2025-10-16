@@ -6,6 +6,6 @@ import java.util.List;
 public record VotacaoRequestDTO(
     Date data,
     String resumo,
-    List<Integer> idsVotos
+    List<Long> idsVotos
 
 ) {}
