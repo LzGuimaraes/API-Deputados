@@ -1,33 +1,43 @@
 package com.example.Deputados.Votacao;
 
-import com.example.Deputados.Proposicao.ProposicaoRepository;
-
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import com.example.Deputados.Votacao.dto.VotacaoRequestDTO;
+import com.example.Deputados.Votacao.dto.VotacaoResponseDTO;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class VotacaoService {
 
-    private final VotacaoRepository votacaoRepository;
-    private final ProposicaoRepository proposicaoRepository;
+    private VotacaoRepository votacaoRepository;
+    private VotacaoMapper votacaoMapper;
 
-    public List<Votacao> findAll() {
-        return votacaoRepository.findAll();
+    public VotacaoService (VotacaoRepository votacaoRepository,VotacaoMapper votacaoMapper) {
+        this.votacaoMapper = votacaoMapper;
+        this.votacaoRepository = votacaoRepository;
     }
 
-    public Optional<Votacao> findById(Integer id) {
-        return votacaoRepository.findById(id);
+   public List<VotacaoResponseDTO> findAllVotacao() {
+        return votacaoRepository.findAll()
+                .stream()
+                .map(votacaoMapper::toResponse)
+                .toList();
     }
 
-    public Votacao save(Votacao votacao) {
-        return votacaoRepository.save(votacao);
+     public VotacaoResponseDTO findVotacaoById(Long id) {
+        return votacaoRepository.findById(id)
+                .map(votacaoMapper::toResponse)
+                .orElseThrow(()-> new RuntimeException("Votacao não encontrada"));
     }
 
-    public void deleteById(Integer id) {
+    public VotacaoResponseDTO createVotacao(VotacaoRequestDTO dto) {
+        VotacaoModel votacao = votacaoMapper.toModel(dto);
+        votacao = votacaoRepository.save(votacao);
+        return votacaoMapper.toResponse(votacao);
+    }
+
+    public void deleteVotacao(Long id) {
         votacaoRepository.deleteById(id);
     }
 }

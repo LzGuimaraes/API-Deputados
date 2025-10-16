@@ -1,30 +1,42 @@
 package com.example.Deputados.Voto;
 
 import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.Deputados.Voto.dto.VotoRequestDTO;
+import com.example.Deputados.Voto.dto.VotoResponseDTO;
 
 @Service
 public class VotoService {
 
-    @Autowired
     private VotoRepository votoRepository;
+    private VotoMapper votoMapper;
 
-    public List<Voto> findAll() {
-        return votoRepository.findAll();
+    public  VotoService(VotoRepository votoRepository, VotoMapper votoMapper) {
+        this.votoRepository = votoRepository;
+        this.votoMapper = votoMapper;
     }
 
-    public Optional<Voto> findById(Long id) {
-        return votoRepository.findById(id);
+    public List<VotoResponseDTO> findAllVoto() {
+        return votoRepository.findAll()
+                .stream()
+                .map(votoMapper::toResponse)
+                .toList();
     }
 
-    public Voto save(Voto voto) {
-        return votoRepository.save(voto);
+    public VotoResponseDTO findVotoById(Long id) {
+        return votoRepository.findById(id)
+                .map(votoMapper::toResponse)
+                .orElseThrow(()-> new RuntimeException("Voto não encontrado"));
     }
 
-    public void deleteById(Long id) {
+    public VotoResponseDTO createVoto(VotoRequestDTO dto) {
+        VotoModel voto = votoMapper.toModel(dto);
+        voto = votoRepository.save(voto);
+        return votoMapper.toResponse(voto);
+    }
+
+    public void deleteVoto(Long id) {
         votoRepository.deleteById(id);
     }
 }
